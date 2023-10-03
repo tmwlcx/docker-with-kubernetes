@@ -26,6 +26,9 @@ when running a container, the `--name container_name` flag will append the `cont
 ## Images
 similar to container names, images can have names. Optionally, images can also have tags. Think of the name as the specialized image name (such as `node` for node.js) and then the tag as the version (such as `14`). For example, to build a new image with a custome `name:tag`, just do `docker build -t image_name:image_tag image_ID`.
 
+## Volumes
+the `-v` flag passed to docker run creates a named volume if name is specified before `:` as in `docker run -v named_volume:\path\to\volume\on\container some_docker_image`, or as an *anonymous volume* if no name is specified as in  `docker run -v \path\to\volume\on\container some_docker_image`
+
 # Cheat Sheet!
 Check out the [Docker Cheat Sheet](./Cheat-Sheet-Images-Containers.pdf)!
 
