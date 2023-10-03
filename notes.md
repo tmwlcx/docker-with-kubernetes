@@ -29,6 +29,9 @@ similar to container names, images can have names. Optionally, images can also h
 ## Volumes
 the `-v` flag passed to docker run creates a named volume if name is specified before `:` as in `docker run -v named_volume:\path\to\volume\on\container some_docker_image`, or as an *anonymous volume* if no name is specified as in  `docker run -v \path\to\volume\on\container some_docker_image`
 
+# Networking    
+`host.docker.internal` for all internal (localhost) IP addresses
+
 # Cheat Sheet!
 Check out the [Docker Cheat Sheet](./Cheat-Sheet-Images-Containers.pdf)!
 
