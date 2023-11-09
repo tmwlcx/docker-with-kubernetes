@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+  mongodb:
+    image: 'mongo'
+    volumes: 
+      - data:/data/db
+    
+    # The below information is commented out because it is in the env_file
+    # environment: 
+      # MONGO_INITDB_ROOT_USERNAME: tim
+      # MONGO_INITDB_ROOT_PASSWORD: secret
+      # - MONGO_INITDB_ROOT_USERNAME=tim
+
+    env_file:
+      - ./env/mongo.env
+      
+  backend:
+    build: ./backend
+
+    # longer form of build:
+    # build: 
+      # context: ./backend
+      # dockerfile: Dockerfile #
+        # args: 
+        #   some-args: 1
+    ports: 
+      - '80:80'
+    volumes:
+      - logs:/app/logs
+      - ./backend:/app #note the use of the relative path. also note this is a bind-mount
+      - /app/node_modules # also a bind mount (doesn't need to be added to top level volumes)
+    env_file:
+      - ./env/backend.env
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
+      
+volumes:
+   data:  
+   logs: 
