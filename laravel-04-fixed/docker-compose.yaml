@@ -3,7 +3,6 @@ version: '3.8'
 services:
   server:
     # image: 'nginx:stable-alpine'
-    platform: linux/arm64/v8
     build:
       context: .
       dockerfile: dockerfiles/nginx.dockerfile
@@ -16,30 +15,19 @@ services:
       - php
       - mysql
   php:
-    platform: linux/arm64/v8
-
     build:
       context: .
       dockerfile: dockerfiles/php.dockerfile
     volumes:
       - ./src:/var/www/html:delegated
   mysql:
-    platform: linux/x86_64
     image: mysql:5.7
-    ports:
-      - 3306:3306
     env_file:
       - ./env/mysql.env
-    # environment:
-    #   - MYSQL_ROOT_USER=root
-    #   - MYSQL_ROOT_PASSWORD=secret
-    #   - MYSQL_DATABASE=homestead
-    #   - MYSQL_USER=homestead
-    #   - MYSQL_PASSWORD=secret
   composer:
     build:
-      context: .
-      dockerfile: dockerfiles/composer.dockerfile
+      context: ./dockerfiles
+      dockerfile: composer.dockerfile
     volumes:
       - ./src:/var/www/html
   artisan:
